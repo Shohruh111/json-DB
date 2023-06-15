@@ -1,0 +1,18 @@
+[
+	{
+		"id": "9809895a-82e6-4b31-a3e6-f1fc1f47a183",
+		"user_id": "13526574-a20f-4a43-b9ff-9aef94bcd639",
+		"sum": 0,
+		"sum_count": 0,
+		"status": "In process...",
+		"orders": null
+	},
+	{
+		"id": "0cad2f33-81d2-42b8-8703-9339abeb252d",
+		"user_id": "13526574-a20f-4a43-b9ff-9aef94bcd639",
+		"sum": 184,
+		"sum_count": 8,
+		"status": "",
+		"orders": null
+	}
+]

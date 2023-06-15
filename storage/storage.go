@@ -7,6 +7,7 @@ import (
 type StorageI interface {
 	User() UserRepoI
 	Product() ProductRepoI
+	Order() OrderRepoI
 }
 
 type UserRepoI interface {
@@ -17,10 +18,19 @@ type UserRepoI interface {
 	Delete(*models.UserPrimaryKey) error
 }
 
-type ProductRepoI interface{
+type ProductRepoI interface {
 	Create(*models.CreateProduct) (*models.Product, error)
 	GetById(*models.ProductPrimaryKey) (*models.Product, error)
 	GetList(*models.ProductGetListRequest) (*models.ProductGetListResponse, error)
 	Update(*models.UpdateProduct) (*models.Product, error)
 	Delete(*models.ProductPrimaryKey) error
+}
+
+type OrderRepoI interface {
+	Create(*models.CreateOrder) (*models.Order, error)
+	GetById(*models.OrderPrimaryKey) (*models.Order, error)
+	GetList(*models.OrderGetListRequest) (*models.OrderGetList, error)
+	Update(*models.UpdateOrder) (*models.Order, error)
+	Delete(*models.OrderPrimaryKey) error
+	CreteOrderItem(*models.OrderItem)
 }

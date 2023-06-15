@@ -36,7 +36,7 @@ func (u *ProductRepo) Create(req *models.CreateProduct) (*models.Product, error)
 		product = models.Product{
 			Id:        id,
 			Name: req.Name,
-			Price:  req.Price,
+			Price: req.Price,
 		}
 	)
 	products[id] = product

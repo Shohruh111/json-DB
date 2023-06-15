@@ -10,6 +10,7 @@ import (
 type StoreJSON struct {
 	user    *UserRepo
 	product *ProductRepo
+	order *OrderRepo
 }
 
 func NewConnectionJSON(cfg *config.Config) (storage.StorageI, error) {
@@ -24,9 +25,15 @@ func NewConnectionJSON(cfg *config.Config) (storage.StorageI, error) {
 		return nil, err
 	}
 
+	orderFile,err := os.Open(cfg.Path+cfg.OrderFileName)
+	if err != nil{
+		return nil, err
+	}
+
 	return &StoreJSON{
 		user:    NewUserRepo(cfg.Path+cfg.UserFileName, userFile),
 		product: NewProductRepo(cfg.Path+cfg.ProductFileName, productFile),
+		order: NewOrderRepo(cfg.Path+cfg.OrderFileName, orderFile),
 	}, nil
 }
 
@@ -36,4 +43,8 @@ func (u *StoreJSON) User() storage.UserRepoI {
 
 func (p *StoreJSON) Product() storage.ProductRepoI {
 	return p.product
+}
+
+func (o *StoreJSON) Order() storage.OrderRepoI{
+	return o.order
 }
