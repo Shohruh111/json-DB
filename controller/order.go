@@ -97,31 +97,6 @@ func (c *Controller) AddOrderItem(req *models.OrderItem) error {
 	}
 
 	c.Strg.Order().CreteOrderItem(req)
-	// data, err := ioutil.ReadFile(c.Cfg.Path + c.Cfg.OrderFileName)
-	// if err != nil {
-	// 	return err
-	// }
-	// err = json.Unmarshal(data, &orders)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// for _, order := range orders {
-	// 	if order.Id == ord.OrderId {
-	// 		order.Sum = order.Sum + ord.TotalPrice
-	// 		order.SumCount += 1
-	// 		order.Status = "In process..."
-	// 		order.Orders = append(order.Orders, ord)
-	// 	}
-	// }
-	// body, err := json.MarshalIndent(orders, "", "	")
-	// if err != nil {
-	// 	return err
-	// }
-	// err = ioutil.WriteFile(c.Cfg.Path+c.Cfg.OrderFileName, body, os.ModePerm)
-	// if err != nil {
-	// 	return err
-	// }
 
 	return nil
 }
