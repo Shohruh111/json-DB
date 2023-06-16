@@ -65,9 +65,6 @@ func (c *Controller) OrderDelete(req *models.OrderPrimaryKey) error {
 }
 
 func (c *Controller) AddOrderItem(req *models.OrderItem) error {
-	// var (
-	// 	orders = []models.Order{}
-	// )
 	prodId, err := c.Strg.Product().GetById(&models.ProductPrimaryKey{
 		Id: req.ProductId,
 	})
@@ -98,5 +95,12 @@ func (c *Controller) AddOrderItem(req *models.OrderItem) error {
 
 	c.Strg.Order().CreteOrderItem(req)
 
+	return nil
+}
+func (c *Controller) RemoveOrderItem(id *models.ProductPrimaryKey) error {
+	err := c.Strg.Order().DeleteOrderItem(id)
+	if err != nil {
+		return err
+	}
 	return nil
 }

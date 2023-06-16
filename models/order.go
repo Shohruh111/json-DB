@@ -41,3 +41,7 @@ type UpdateOrder struct {
 	Status   string       `json:"status"`
 	Orders   []*OrderItem `json:"orders"`
 }
+
+type OrderItemPrimaryKey struct{
+	Id string `json:"id"`
+}

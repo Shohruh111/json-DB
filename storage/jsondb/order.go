@@ -24,115 +24,145 @@ func NewOrderRepo(fileName string, file *os.File) *OrderRepo {
 }
 func (o *OrderRepo) Create(ord *models.CreateOrder) (*models.Order, error) {
 	orders, err := o.read()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	var (
-		id = uuid.New().String()
+		id    = uuid.New().String()
 		order = models.Order{
-			Id: id,
-			UserId: ord.UserId,
-			Sum: ord.Sum,
+			Id:       id,
+			UserId:   ord.UserId,
+			Sum:      ord.Sum,
 			SumCount: ord.SumCount,
-			Status: ord.Status,
-			
+			Status:   ord.Status,
 		}
 	)
 	orders[id] = order
 	err = o.write(orders)
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 	return &order, nil
 }
 
-func (o *OrderRepo) GetById(ord *models.OrderPrimaryKey)(*models.Order,error){
+func (o *OrderRepo) GetById(ord *models.OrderPrimaryKey) (*models.Order, error) {
 	orders, err := o.read()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	if _, ok := orders[ord.Id];!ok{
+	if _, ok := orders[ord.Id]; !ok {
 		return nil, errors.New("Order not found")
 	}
 	order := orders[ord.Id]
 	return &order, nil
 }
 
-func (o *OrderRepo) GetList(ord *models.OrderGetListRequest) (*models.OrderGetList, error){
+func (o *OrderRepo) GetList(ord *models.OrderGetListRequest) (*models.OrderGetList, error) {
 	var resp = &models.OrderGetList{}
 	resp.Orders = []*models.Order{}
 
 	orderMap, err := o.read()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	resp.Count=len(orderMap)
-	for _, val := range orderMap{
+	resp.Count = len(orderMap)
+	for _, val := range orderMap {
 		orders := val
-		resp.Orders=append(resp.Orders, &orders)
+		resp.Orders = append(resp.Orders, &orders)
 	}
 	return resp, nil
 }
 
-func (o *OrderRepo) Update(ord *models.UpdateOrder) (*models.Order, error){
+func (o *OrderRepo) Update(ord *models.UpdateOrder) (*models.Order, error) {
 	orders, err := o.read()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
-	if _, ok := orders[ord.Id]; !ok{
+	if _, ok := orders[ord.Id]; !ok {
 		return nil, errors.New("Order not found!")
 	}
-	orders[ord.Id]=models.Order{
-		Id: ord.Id,
-		UserId: ord.UserId,
-		Sum: ord.Sum,
+	orders[ord.Id] = models.Order{
+		Id:       ord.Id,
+		UserId:   ord.UserId,
+		Sum:      ord.Sum,
 		SumCount: ord.SumCount,
 	}
 	err = o.write(orders)
-	if err !=nil{
+	if err != nil {
 		return nil, err
 	}
 	order := orders[ord.Id]
 	return &order, nil
 }
-func (o *OrderRepo) Delete(ord *models.OrderPrimaryKey) error{
+func (o *OrderRepo) Delete(ord *models.OrderPrimaryKey) error {
 	orders, err := o.read()
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	delete(orders, ord.Id)
 	err = o.write(orders)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 
 	return nil
 }
-func(o *OrderRepo) CreteOrderItem(ord *models.OrderItem){
+func (o *OrderRepo) CreteOrderItem(ord *models.OrderItem) {
 	var (
 		order = []models.OrderItem{}
 	)
 	orderItems, err := ioutil.ReadFile("./data/orderItem.json")
-	if err != nil{
-		return 
+	if err != nil {
+		return
 	}
-	err = json.Unmarshal(orderItems,&order)
-	if err != nil{
+	err = json.Unmarshal(orderItems, &order)
+	if err != nil {
 		return
 	}
 	order = append(order, *ord)
 	body, err := json.MarshalIndent(order, "", "	")
-	if err != nil{
+	if err != nil {
 		return
 	}
 
-	err = ioutil.WriteFile("./data/orderItem.json",body, os.ModePerm)
-	if err != nil{
-		return 
+	err = ioutil.WriteFile("./data/orderItem.json", body, os.ModePerm)
+	if err != nil {
+		return
 	}
 
 }
+func (o *OrderRepo) DeleteOrderItem(req *models.ProductPrimaryKey) error {
+	var (
+		orders    = []models.OrderItem{}
+		orderItem = []models.OrderItem{}
+	)
+	orderItems, err := ioutil.ReadFile("./data/orderItem.json")
+	if err != nil {
+		return err
+	}
 
+	err = json.Unmarshal(orderItems, &orders)
+	if err != nil {
+		return err
+	}
+
+	for _, order := range orders {
+		if order.ProductId != req.Id {
+			orderItem = append(orderItem, order)
+		}
+	}
+
+	body, err := json.MarshalIndent(orderItem, "", "	")
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile("./data/orderItem.json", body, os.ModePerm)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 func (o *OrderRepo) read() (map[string]models.Order, error) {
 	var (
@@ -151,16 +181,16 @@ func (o *OrderRepo) read() (map[string]models.Order, error) {
 		return nil, err
 	}
 
-	for _, order := range orders{
-		orderMap[order.Id]=*order
+	for _, order := range orders {
+		orderMap[order.Id] = *order
 	}
 	return orderMap, nil
 }
 
-func (o *OrderRepo) write(orderMap map[string]models.Order) error{
+func (o *OrderRepo) write(orderMap map[string]models.Order) error {
 	var orders []models.Order
-	for _, val := range orderMap{
-		orders=append(orders, val)
+	for _, val := range orderMap {
+		orders = append(orders, val)
 	}
 	body, err := json.MarshalIndent(orders, "", "	")
 	if err != nil {

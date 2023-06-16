@@ -33,4 +33,5 @@ type OrderRepoI interface {
 	Update(*models.UpdateOrder) (*models.Order, error)
 	Delete(*models.OrderPrimaryKey) error
 	CreteOrderItem(*models.OrderItem)
+	DeleteOrderItem(*models.ProductPrimaryKey)error
 }
