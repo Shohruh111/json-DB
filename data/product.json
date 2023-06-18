@@ -1,1 +1,26 @@
-[]
+[
+	{
+		"id": "558db6d5-e43c-4840-b369-7effe0ebba14",
+		"name": "Matematika",
+		"price": 15000,
+		"discount": 0,
+		"discount_type": "",
+		"category_id": "8ca2dea0-eff2-4ba4-978f-763efab6bc50"
+	},
+	{
+		"id": "3ea8bcaa-8115-4588-bd57-749ec5592064",
+		"name": "Learning Golang",
+		"price": 200000,
+		"discount": 30,
+		"discount_type": "PERCENT",
+		"category_id": "8ca2dea0-eff2-4ba4-978f-763efab6bc50"
+	},
+	{
+		"id": "cb158bb4-c3ce-402d-b715-223a5ba1c97a",
+		"name": "Clean Code",
+		"price": 350000,
+		"discount": 40000,
+		"discount_type": "FIX",
+		"category_id": "8ca2dea0-eff2-4ba4-978f-763efab6bc50"
+	}
+]
