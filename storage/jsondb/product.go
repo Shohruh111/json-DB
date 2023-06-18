@@ -32,11 +32,14 @@ func (u *ProductRepo) Create(req *models.CreateProduct) (*models.Product, error)
 	}
 
 	var (
-		id   = uuid.New().String()
+		id      = uuid.New().String()
 		product = models.Product{
-			Id:        id,
-			Name: req.Name,
-			Price: req.Price,
+			Id:           id,
+			Name:         req.Name,
+			Price:        req.Price,
+			Discount:     req.Discount,
+			DiscountType: req.DiscountType,
+			CategoryID:   req.CategoryID,
 		}
 	)
 	products[id] = product
@@ -94,9 +97,12 @@ func (u *ProductRepo) Update(req *models.UpdateProduct) (*models.Product, error)
 	}
 
 	products[req.Id] = models.Product{
-		Id:        req.Id,
-		Name: req.Name,
-		Price:  req.Price,
+		Id:           req.Id,
+		Name:         req.Name,
+		Price:        req.Price,
+		Discount:     req.Discount,
+		DiscountType: req.DiscountType,
+		CategoryID:   req.CategoryID,
 	}
 
 	err = u.write(products)

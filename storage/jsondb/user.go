@@ -37,6 +37,7 @@ func (u *UserRepo) Create(req *models.CreateUser) (*models.User, error) {
 			Id:        id,
 			FirstName: req.FirstName,
 			LastName:  req.LastName,
+			Balance:   req.Balance,
 		}
 	)
 	users[id] = user
@@ -98,6 +99,7 @@ func (u *UserRepo) Update(req *models.UpdateUser) (*models.User, error) {
 		Id:        req.Id,
 		FirstName: req.FirstName,
 		LastName:  req.LastName,
+		Balance:   req.Balance,
 	}
 
 	err = u.write(users)

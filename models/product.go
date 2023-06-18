@@ -5,20 +5,29 @@ type ProductPrimaryKey struct {
 }
 
 type CreateProduct struct {
-	Name  string `json:"name"`
-	Price int    `json:"price"`
+	Name         string `json:"name"`
+	Price        int    `json:"price"`
+	Discount     int    `json:"discount"`
+	DiscountType string `json:"discount_type"`
+	CategoryID   string `json:"category_id"`
 }
 
 type Product struct {
-	Id    string `json:"id"`
-	Name  string `json:"name"`
-	Price int    `json:"price"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	Price        int    `json:"price"`
+	Discount     int    `json:"discount"`
+	DiscountType string `json:"discount_type"`
+	CategoryID   string `json:"category_id"`
 }
 
 type UpdateProduct struct {
-	Id    string `json:"id"`
-	Name  string `json:"name"`
-	Price int    `json:"price"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	Price        int    `json:"price"`
+	Discount     int    `json:"discount"`
+	DiscountType string `json:"discount_type"`
+	CategoryID   string `json:"category_id"`
 }
 
 type ProductGetListRequest struct {
