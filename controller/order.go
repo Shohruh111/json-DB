@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"sort"
 
 	"app/config"
 	"app/models"
@@ -252,6 +253,7 @@ var ProductsMap = make(map[string]int)
 func (c *Controller) ActiveProduct() (string, error) {
 	var (
 		prodNames = make(map[string]int)
+		keys      = make([]string, 0, len(prodNames))
 	)
 	orders, err := c.Strg.Order().GetList(&models.OrderGetListRequest{0, 0})
 	if err != nil {
@@ -267,8 +269,14 @@ func (c *Controller) ActiveProduct() (string, error) {
 		}
 		prodNames[productName.Name] = val
 	}
-	for key, val := range prodNames {
-		fmt.Println(key, ":", val)
+	for key := range prodNames {
+		keys = append(keys, key)
+	}
+	sort.SliceStable(keys, func(i, j int) bool {
+		return prodNames[keys[i]] > prodNames[keys[j]]
+	})
+	for _, k := range keys {
+		fmt.Println(k, prodNames[k])
 	}
 	return "", nil
 }
