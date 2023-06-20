@@ -21,7 +21,8 @@ func main() {
 	// Product(con)
 	// Order(con)
 	// OrderPayment(con)
-	UserHistory(con)
+	// UserHistory(con)
+	con.ActiveProduct()
 }
 func UserHistory(con *controller.Controller) {
 	userHistory, err := con.UserHistory()
@@ -81,12 +82,12 @@ func Product(con *controller.Controller) {
 
 func Order(con *controller.Controller) {
 	// con.OrderCreate(&models.CreateOrder{
-	// 	UserId: "af299662-c6e8-4559-a0da-cebf213a061d",
+	// 	UserId: "d33c4572-81b8-4837-9aaa-252154a3f629",
 	// })
 
 	var (
-		orderId   = "634957ce-b166-45da-ae73-f5b00e092f5a"
-		productId = "cb158bb4-c3ce-402d-b715-223a5ba1c97a"
+		orderId   = "e75db884-2b1d-4ff6-a66f-7d41b2c56697"
+		productId = "558db6d5-e43c-4840-b369-7effe0ebba14"
 		count     = 2
 	)
 

@@ -178,7 +178,6 @@ func (c *Controller) OrderPayment(req *models.OrderPayment) error {
 }
 
 func (c *Controller) UserHistory() (map[string]interface{}, error) {
-	fmt.Println("User history")
 	var (
 		userHistoryList = make(map[string]interface{})
 	)
@@ -201,7 +200,6 @@ func (c *Controller) UserHistory() (map[string]interface{}, error) {
 	return userHistoryList, err
 }
 func (c *Controller) findOrders(req *models.Order) []models.UserHistory {
-	fmt.Println("find orders")
 	ords := []models.UserHistory{}
 	for _, ord := range req.OrderItems {
 		prod, _ := c.Strg.Product().GetById(&models.ProductPrimaryKey{ord.ProductId})
@@ -222,4 +220,61 @@ func (c *Controller) findUsers(req *models.OrderGetList, user *models.UserPrimar
 		}
 	}
 	return "", errors.New("id not found")
+}
+
+func (c *Controller) ActiveUser() (string, error) {
+	var (
+		usersMap = make(map[string]int)
+	)
+	orders, err := c.Strg.Order().GetList(&models.OrderGetListRequest{0, 0})
+	if err != nil {
+		return "", err
+	}
+	for _, val := range orders.Orders {
+		usersMap[val.UserId] += val.Sum
+	}
+	userid, count := "", 0
+	for key, val := range usersMap {
+		if val > count {
+			userid = key
+			count = val
+		}
+	}
+	user, err := c.Strg.User().GetById(&models.UserPrimaryKey{userid})
+	if err != nil {
+		return "", nil
+	}
+	return user.FirstName, nil
+}
+
+var ProductsMap = make(map[string]int)
+
+func (c *Controller) ActiveProduct() (string, error) {
+	var (
+		prodNames = make(map[string]int)
+	)
+	orders, err := c.Strg.Order().GetList(&models.OrderGetListRequest{0, 0})
+	if err != nil {
+		return "", err
+	}
+	for _, val := range orders.Orders {
+		c.forActiveProduct(val.OrderItems)
+	}
+	for key, val := range ProductsMap {
+		productName, err := c.Strg.Product().GetById(&models.ProductPrimaryKey{key})
+		if err != nil {
+			continue
+		}
+		prodNames[productName.Name] = val
+	}
+	for key, val := range prodNames {
+		fmt.Println(key, ":", val)
+	}
+	return "", nil
+}
+
+func (c *Controller) forActiveProduct(req []*models.CreateOrderItem) {
+	for _, val := range req {
+		ProductsMap[val.ProductId] += val.Count
+	}
 }
