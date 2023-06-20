@@ -1,8 +1,38 @@
 [
 	{
-		"id": "73137ba0-4595-4ad6-ad38-5fcecd732b7f",
+		"id": "af299662-c6e8-4559-a0da-cebf213a061d",
+		"first_name": "Daniel",
+		"last_name": "Fransua",
+		"balance": 150000
+	},
+	{
+		"id": "2fc184a2-d1e6-4c5e-81e2-509eeb0b7485",
+		"first_name": "Daminick",
+		"last_name": "Toretto",
+		"balance": 600000
+	},
+	{
+		"id": "4e24e752-f6ab-4fab-84ec-f5462ba611f0",
 		"first_name": "Asadbek",
 		"last_name": "Ergashev",
 		"balance": 200000
+	},
+	{
+		"id": "d33c4572-81b8-4837-9aaa-252154a3f629",
+		"first_name": "Shohruh",
+		"last_name": "Ramozonov",
+		"balance": 400000
+	},
+	{
+		"id": "80dc55d9-715e-45be-8139-55fb5a461595",
+		"first_name": "Paul",
+		"last_name": "Walker",
+		"balance": 350000
+	},
+	{
+		"id": "d5775f8b-5069-4994-8d0c-8017b6bf6ab0",
+		"first_name": "John",
+		"last_name": "Cena",
+		"balance": 900000
 	}
 ]

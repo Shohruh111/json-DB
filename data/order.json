@@ -1,11 +1,26 @@
 [
 	{
-		"id": "3ec9702c-3002-4007-b72d-273746bdad60",
-		"user_id": "204ff9b0-3f4e-41b3-a436-3a1fce028fa6",
-		"sum": 0,
-		"sum_count": 0,
-		"date_time": "2023-06-18 16:14:07",
+		"id": "634957ce-b166-45da-ae73-f5b00e092f5a",
+		"user_id": "af299662-c6e8-4559-a0da-cebf213a061d",
+		"sum": 900000,
+		"sum_count": 4,
+		"date_time": "2023-06-20 18:11:08",
 		"status": "in_process",
-		"order_items": null
+		"order_items": [
+			{
+				"id": "7c9de9e7-6ee5-44c1-86d7-7a18fdc39735",
+				"product_id": "3ea8bcaa-8115-4588-bd57-749ec5592064",
+				"order_id": "634957ce-b166-45da-ae73-f5b00e092f5a",
+				"count": 2,
+				"total_price": 280000
+			},
+			{
+				"id": "a7fe7d64-9a2c-47ab-9815-fc400146ea5b",
+				"product_id": "cb158bb4-c3ce-402d-b715-223a5ba1c97a",
+				"order_id": "634957ce-b166-45da-ae73-f5b00e092f5a",
+				"count": 2,
+				"total_price": 620000
+			}
+		]
 	}
 ]

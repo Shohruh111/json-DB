@@ -176,3 +176,50 @@ func (c *Controller) OrderPayment(req *models.OrderPayment) error {
 
 	return nil
 }
+
+func (c *Controller) UserHistory() (map[string]interface{}, error) {
+	fmt.Println("User history")
+	var (
+		userHistoryList = make(map[string]interface{})
+	)
+	users, err := c.Strg.User().GetList(&models.UserGetListRequest{0, 0})
+	if err != nil {
+		return nil, err
+	}
+	orders, err := c.Strg.Order().GetList(&models.OrderGetListRequest{0, 0})
+	if err != nil {
+		return nil, err
+	}
+	for _, user := range users.Users {
+		orderId, err := c.findUsers(orders, &models.UserPrimaryKey{user.Id})
+		if err != nil {
+			continue
+		}
+		orders, _ := c.Strg.Order().GetById(&models.OrderPrimaryKey{orderId})
+		userHistoryList[user.FirstName] = c.findOrders(orders)
+	}
+	return userHistoryList, err
+}
+func (c *Controller) findOrders(req *models.Order) []models.UserHistory {
+	fmt.Println("find orders")
+	ords := []models.UserHistory{}
+	for _, ord := range req.OrderItems {
+		prod, _ := c.Strg.Product().GetById(&models.ProductPrimaryKey{ord.ProductId})
+		mode := models.UserHistory{
+			ProductName: prod.Name,
+			Count:       ord.Count,
+			TotalCount:  ord.TotalPrice,
+		}
+		ords = append(ords, mode)
+	}
+	return ords
+}
+
+func (c *Controller) findUsers(req *models.OrderGetList, user *models.UserPrimaryKey) (string, error) {
+	for _, order := range req.Orders {
+		if user.Id == order.UserId {
+			return order.Id, nil
+		}
+	}
+	return "", errors.New("id not found")
+}

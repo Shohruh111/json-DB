@@ -20,14 +20,24 @@ func main() {
 	// Category(con)
 	// Product(con)
 	// Order(con)
-	OrderPayment(con)
+	// OrderPayment(con)
+	UserHistory(con)
 }
-
+func UserHistory(con *controller.Controller) {
+	userHistory, err := con.UserHistory()
+	if err != nil {
+		fmt.Println(err)
+	}
+	for key, val := range userHistory {
+		fmt.Printf("\t\t %s:\n", key)
+		fmt.Println(val)
+	}
+}
 func User(con *controller.Controller) {
 	con.UserCreate(&models.CreateUser{
-		FirstName: "Asadbek",
-		LastName:  "Ergashev",
-		Balance:   200_000,
+		FirstName: "Daminick",
+		LastName:  "Toretto",
+		Balance:   600_000,
 	})
 }
 
@@ -39,7 +49,7 @@ func Category(con *controller.Controller) {
 
 func Product(con *controller.Controller) {
 
-	var categoryId = "8ca2dea0-eff2-4ba4-978f-763efab6bc50"
+	var categoryId = "0486c9a7-6aaa-450c-8006-1c216ac5650b"
 	var products = []models.CreateProduct{
 		{
 			Name:         "Matematika",
@@ -71,12 +81,12 @@ func Product(con *controller.Controller) {
 
 func Order(con *controller.Controller) {
 	// con.OrderCreate(&models.CreateOrder{
-	// 	UserId: "204ff9b0-3f4e-41b3-a436-3a1fce028fa6",
+	// 	UserId: "af299662-c6e8-4559-a0da-cebf213a061d",
 	// })
 
 	var (
-		orderId   = "ff9aa3f6-7dd2-4b2e-9376-93bc47391e82"
-		productId = "55288fca-0360-475e-87a8-69a25d92b8fa"
+		orderId   = "634957ce-b166-45da-ae73-f5b00e092f5a"
+		productId = "cb158bb4-c3ce-402d-b715-223a5ba1c97a"
 		count     = 2
 	)
 
@@ -89,7 +99,7 @@ func Order(con *controller.Controller) {
 
 func OrderPayment(con *controller.Controller) {
 
-	var orderId = "ff9aa3f6-7dd2-4b2e-9376-93bc47391e82"
+	var orderId = "d4daa0c2-d13d-4ab4-89f1-677ec606fc3a"
 
 	err := con.OrderPayment(&models.OrderPayment{
 		OrderId: orderId,

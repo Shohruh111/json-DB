@@ -33,3 +33,9 @@ type UserGetListResponse struct {
 	Count int
 	Users []*User
 }
+
+type UserHistory struct {
+	ProductName string `json:"name"`
+	Count       int    `json:"count"`
+	TotalCount  int    `json:"total_count"`
+}
