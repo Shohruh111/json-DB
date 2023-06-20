@@ -24,7 +24,7 @@ func (c *Controller) OrderCreate(req *models.CreateOrder) (*models.Order, error)
 	return resp, nil
 }
 
-func (c *Controller) GetByIdOrder(req *models.OrderPrimaryKey) (*models.Order, error) {
+func (c *Controller) GetByIdOrder(req *models.OrderPrimaryKey) ([]*models.CreateOrderItem, error) {
 
 	resp, err := c.Strg.Order().GetById(req)
 	if err != nil {
@@ -32,7 +32,7 @@ func (c *Controller) GetByIdOrder(req *models.OrderPrimaryKey) (*models.Order, e
 		return nil, err
 	}
 
-	return resp, nil
+	return resp.OrderItems, nil
 }
 
 func (c *Controller) OrderGetList(req *models.OrderGetListRequest) (*models.OrderGetList, error) {

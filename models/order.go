@@ -57,3 +57,11 @@ type RemoveOrderItemPrimaryKey struct {
 type OrderPayment struct {
 	OrderId string `json:"order_id"`
 }
+
+type OrderItem struct{
+	Id         string `json:"id"`
+	ProductId  string `json:"product_id"`
+	OrderId    string `json:"order_id"`
+	Count      int    `json:"count"`
+	TotalPrice int    `json:"total_price"`
+}
